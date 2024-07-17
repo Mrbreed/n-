@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo em Tela Cheia</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: black;
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .label {
+            background: black;
+            color: purple;
+            padding: 5px;
+            border: 2px solid purple;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            width: 100px;
+            margin: 0 5px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        #labels-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://player.vimeo.com/video/985641299?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="densssa"></iframe>
+    <script src="https://player.vimeo.com/api/player.js" allowfullscreen></script>
+    <script>
+        setTimeout(() => {
+            const labelsContainer = document.createElement('div');
+            labelsContainer.id = 'labels-container';
+
+            const rows = [
+                [
+                    { id: 'salao-de-festa', text: 'salão de festa' },
+                    { id: 'banheiro', text: 'banheiro', link: 'https://mrbreed.github.io/Dessa2/' }
+                ],
+                [
+                    { id: 'sala-de-arte', text: 'sala de arte' },
+                    { id: 'dormitorio', text: 'dormitório' }
+                ]
+            ];
+
+            rows.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row';
+
+                row.forEach(label => {
+                    const div = document.createElement('div');
+                    div.id = label.id;
+                    div.className = 'label';
+                    div.innerText = label.text;
+
+                    if (label.link) {
+                        div.onclick = () => {
+                            window.location.href = label.link;
+                        };
+                    } else {
+                        div.onclick = () => {
+                            alert('incorreta, tente novamente.');
+                        };
+                    }
+
+                    rowDiv.appendChild(div);
+                });
+
+                labelsContainer.appendChild(rowDiv);
+            });
+
+            document.body.appendChild(labelsContainer);
+        }, 8500); // 8.5 seconds
+    </script>
+</body>
+</html>
+
